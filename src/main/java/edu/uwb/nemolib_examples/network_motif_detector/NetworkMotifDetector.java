@@ -11,6 +11,8 @@ public class NetworkMotifDetector {
 
     public static void main(String[] args) {
 
+        long startTime = System.currentTimeMillis();
+
         if (args.length < 3) {
             System.err.println("usage: NetworkMotifDetector path_to_data " +
                     "motif_size, random_graph_count");
@@ -65,6 +67,7 @@ public class NetworkMotifDetector {
         System.out.println(relativeFrequencyAnalyzer);
 
         System.out.println("Compete");
+        System.out.println(System.currentTimeMillis() - startTime);
     }
 }
 
