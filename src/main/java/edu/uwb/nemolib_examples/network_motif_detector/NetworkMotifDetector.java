@@ -67,7 +67,7 @@ public class NetworkMotifDetector {
         System.out.println(relativeFrequencyAnalyzer);
 
         System.out.println("Compete");
-        System.out.println(System.currentTimeMillis() - startTime);
+        System.out.println( (System.currentTimeMillis() - startTime) / 1000.0 );
     }
 }
 
