@@ -42,7 +42,8 @@ public class NetworkMotifDetector {
         }
 
         System.out.println( "File Input Time" + ((System.currentTimeMillis() - startTally) / 1000.0) ) ;
-        System.out.println( "time from the beginning" + ((System.currentTimeMillis() - startTime) / 1000.0) );
+        System.out.println( "time from the beginning" + ((System.currentTimeMillis() - startTime) / 1000.0) + "\n\n");
+        startTally = startTime;
 
         // Hard-code probs for now. This vector will take about ~10% sample
         List<Double> probs = new LinkedList<>();
