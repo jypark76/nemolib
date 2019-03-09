@@ -12,6 +12,7 @@ public class NetworkMotifDetector {
     public static void main(String[] args) {
 
         long startTime = System.currentTimeMillis();
+        long startTally = startTime;
 
         if (args.length < 3) {
             System.err.println("usage: NetworkMotifDetector path_to_data " +
@@ -29,15 +30,6 @@ public class NetworkMotifDetector {
             System.exit(-1);
         }
 
-
-        // Hard-code probs for now. This vector will take about ~10% sample
-        List<Double> probs = new LinkedList<>();
-        for (int i = 0; i < motifSize - 2; i++) {
-            probs.add(1.0);
-        }
-        probs.add(1.0);
-        probs.add(0.1);
-
         // parse input graph
         System.out.println("Parsing target graph...");
         Graph targetGraph = null;
@@ -48,6 +40,17 @@ public class NetworkMotifDetector {
             System.err.println(e);
             System.exit(-1);
         }
+
+        System.out.println( "File Input Time" + ((System.currentTimeMillis() - startTally) / 1000.0) ) ;
+        System.out.println( "time from the beginning" + ((System.currentTimeMillis() - startTime) / 1000.0) );
+
+        // Hard-code probs for now. This vector will take about ~10% sample
+        List<Double> probs = new LinkedList<>();
+        for (int i = 0; i < motifSize - 2; i++) {
+            probs.add(1.0);
+        }
+        probs.add(1.0);
+        probs.add(0.1);
 
         SubgraphEnumerationResult subgraphCount = new SubgraphCount();
         SubgraphEnumerator targetGraphESU = new ESU();
