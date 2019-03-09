@@ -29,6 +29,7 @@ public class NetworkMotifDetector {
             System.exit(-1);
         }
 
+
         // Hard-code probs for now. This vector will take about ~10% sample
         List<Double> probs = new LinkedList<>();
         for (int i = 0; i < motifSize - 2; i++) {
@@ -50,12 +51,19 @@ public class NetworkMotifDetector {
 
         SubgraphEnumerationResult subgraphCount = new SubgraphCount();
         SubgraphEnumerator targetGraphESU = new ESU();
+
+        System.out.println( (System.currentTimeMillis() - startTime) / 1000.0 );
+        System.exit(1);
+
         TargetGraphAnalyzer targetGraphAnalyzer =
                 new TargetGraphAnalyzer(targetGraphESU, subgraphCount);
         Map<String, Double> targetLabelToRelativeFrequency =
                 targetGraphAnalyzer.analyze(targetGraph, motifSize);
 
         SubgraphEnumerator randESU = new RandESU(probs);
+
+        System.out.println("Critical Area Start");
+
         RandomGraphAnalyzer randomGraphAnalyzer =
                 new RandomGraphAnalyzer(randESU, randGraphCount);
         Map<String, List<Double>> randomLabelToRelativeFrequencies =
@@ -65,6 +73,8 @@ public class NetworkMotifDetector {
                 new RelativeFrequencyAnalyzer(randomLabelToRelativeFrequencies,
                         targetLabelToRelativeFrequency);
         System.out.println(relativeFrequencyAnalyzer);
+
+        System.out.println("Critical area end");
 
         System.out.println("Compete");
         System.out.println( (System.currentTimeMillis() - startTime) / 1000.0 );
