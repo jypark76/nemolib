@@ -52,7 +52,7 @@ public class NetworkMotifDetector {
         SubgraphEnumerationResult subgraphCount = new SubgraphCount();
         SubgraphEnumerator targetGraphESU = new ESU();
 
-        System.out.println( (System.currentTimeMillis() - startTime) / 1000.0 );
+        System.out.println((System.currentTimeMillis() - startTime) / 1000.0);
         System.exit(1);
 
         TargetGraphAnalyzer targetGraphAnalyzer =
@@ -77,7 +77,7 @@ public class NetworkMotifDetector {
         System.out.println("Critical area end");
 
         System.out.println("Compete");
-        System.out.println( (System.currentTimeMillis() - startTime) / 1000.0 );
+        System.out.println((System.currentTimeMillis() - startTime) / 1000.0);
     }
 }
 
