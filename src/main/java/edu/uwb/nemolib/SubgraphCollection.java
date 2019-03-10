@@ -6,24 +6,20 @@ import java.util.Set;
 /**
  *
  */
-public class SubgraphCollection
-{
-	Set<Set<Integer>> subgraphs;
+public class SubgraphCollection {
+    Set<Set<Integer>> subgraphs;
 
-	// prevent default constructor from being called
-	private SubgraphCollection()
-	{
-		throw new AssertionError();
-	}
+    // prevent default constructor from being called
+    private SubgraphCollection() {
+        throw new AssertionError();
+    }
 
-	SubgraphCollection(int subgraphSize)
-	{
-		subgraphs = new HashSet<Set<Integer>>();
-	}
+    SubgraphCollection(int subgraphSize) {
+        subgraphs = new HashSet<Set<Integer>>();
+    }
 
-	void add(Set<Integer> subgraph)
-	{
-		subgraphs.add(subgraph);
-	}
+    void add(Set<Integer> subgraph) {
+        subgraphs.add(subgraph);
+    }
 
 }

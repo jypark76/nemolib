@@ -12,68 +12,76 @@ public class Subgraph {
     private AdjacencyMatrix matrix;
     private int currentSize;
 
-	/**
-	 * Construct a subgraph of a specified order (i.e. number of nodes)
-	 * @param order the order of this subgraphs
-	 */
+    /**
+     * Construct a subgraph of a specified order (i.e. number of nodes)
+     *
+     * @param order the order of this subgraphs
+     */
     public Subgraph(int order) {
         // 'order' refers to the number of nodes the subgraph will contain
         this.currentSize = 0;
-        this.nodes       = new int[order];
-        this.matrix      = new AdjacencyMatrix(order);
+        this.nodes = new int[order];
+        this.matrix = new AdjacencyMatrix(order);
     }
 
-	/**
-	 * Create a deep copy of this subgraph
-	 * @return a deep copy of this subgraph
-	 */
+    /**
+     * Create a deep copy of this subgraph
+     *
+     * @return a deep copy of this subgraph
+     */
     public Subgraph copy() {
         Subgraph copy = new Subgraph(order());
         copy.currentSize = currentSize;
-	    System.arraycopy(nodes, 0, copy.nodes, 0, nodes.length);
+        System.arraycopy(nodes, 0, copy.nodes, 0, nodes.length);
         copy.matrix = this.matrix.copy();
         return copy;
     }
 
-	//TODO rename this. Size should refer to the number of edges
-	/**
-	 * Get the current getSize of this Subgraph.
-	 * @return the getSize of this Subgraph.
-	 */ 
+    //TODO rename this. Size should refer to the number of edges
+
+    /**
+     * Get the current getSize of this Subgraph.
+     *
+     * @return the getSize of this Subgraph.
+     */
     public int size() {
         return currentSize;
     }
 
-	/**
-	 * Get number of possible nodes in this Subgraph
-	 * @return the maximum order of this Subgraph
-	 */
+    /**
+     * Get number of possible nodes in this Subgraph
+     *
+     * @return the maximum order of this Subgraph
+     */
     public int order() {
         return nodes.length;
     }
 
-	/**
-	 * Test whether this subgraph has been filled
-	 * @return true if subgraph is full; false otherwise
-	 */
+    /**
+     * Test whether this subgraph has been filled
+     *
+     * @return true if subgraph is full; false otherwise
+     */
     public boolean isComplete() {
         return size() == order();
     }
 
-	/**
-	 * Gets the id number of the first vertex added to this Subgraph
-	 * @return the id of the root
-	 */
+    /**
+     * Gets the id number of the first vertex added to this Subgraph
+     *
+     * @return the id of the root
+     */
     public int root() {
         return nodes[0];
     }
 
-	/**
-	 * Check whether a vertex exists in this Subgraph
-	 * @param vertex the target vertex
-	 * @return true if this subgraph contains the specified vertex, false
-	 * otherwise
-	 */
+    /**
+     * Check whether a vertex exists in this Subgraph
+     *
+     * @param vertex the target vertex
+     * @return true if this subgraph contains the specified vertex, false
+     * otherwise
+     */
     public boolean contains(int vertex) {
         for (int i = 0; i < size(); i++) {
             if (nodes[i] == vertex) {
@@ -83,11 +91,12 @@ public class Subgraph {
         return false;
     }
 
-	/**
-	 * Add a vertex to this Subgraph
-	 * @param vertex the vertex to addSubgraph to this Subgraph
-	 * @param adjacencyList the adjacencyList of the vertex being added
-	 */
+    /**
+     * Add a vertex to this Subgraph
+     *
+     * @param vertex        the vertex to addSubgraph to this Subgraph
+     * @param adjacencyList the adjacencyList of the vertex being added
+     */
     public void add(int vertex, AdjacencyList adjacencyList) {
         int index = vertex;
         nodes[currentSize] = index;
@@ -100,27 +109,30 @@ public class Subgraph {
         currentSize++;
     }
 
-	/**
-	 * Get the nth node added to this Subgraph
-	 * @return the nth node added to this Subgraph
-	 */
+    /**
+     * Get the nth node added to this Subgraph
+     *
+     * @return the nth node added to this Subgraph
+     */
     public int get(int n) {
         return nodes[n];
     }
 
-	/**
-	 * Get all the nodes in this Subgraph
-	 * @return this Subgraph's nodes
-	 */
-    public int[] getNodes( ) {
+    /**
+     * Get all the nodes in this Subgraph
+     *
+     * @return this Subgraph's nodes
+     */
+    public int[] getNodes() {
         return nodes;
     }
 
-	/**
-	 * Return a string representation of this Subgraph. Should display in the 
-	 * format [x, y, z], where x, y, and z represent vertices in this subgraph.
-	 * @return a string representation of this subgraph
-	 */
+    /**
+     * Return a string representation of this Subgraph. Should display in the
+     * format [x, y, z], where x, y, and z represent vertices in this subgraph.
+     *
+     * @return a string representation of this subgraph
+     */
     @Override
     public String toString() {
         String s = "[";
@@ -131,10 +143,11 @@ public class Subgraph {
         return s;
     }
 
-	/**
-	 * Get the g6 label (byteString) for this Subgraph
-	 * @return the g6 label for this Subgraph
-	 */
+    /**
+     * Get the g6 label (byteString) for this Subgraph
+     *
+     * @return the g6 label for this Subgraph
+     */
     public String getByteString() {
         try {
             return new String(matrix.toBytes(), "UTF-8");
@@ -157,7 +170,7 @@ public class Subgraph {
 
         private AdjacencyMatrix(AdjacencyMatrix source) {
             this.order = source.order;
-            this.matrix = (BitSet)source.matrix.clone();
+            this.matrix = (BitSet) source.matrix.clone();
         }
 
         void addEdge(int x, int y) {
@@ -167,8 +180,7 @@ public class Subgraph {
             matrix.set(indexFor(x, y));
         }
 
-        boolean hasEdge(int x, int y)
-        {
+        boolean hasEdge(int x, int y) {
             return x == y || matrix.get(indexFor(x, y));
         }
 
@@ -201,7 +213,7 @@ public class Subgraph {
             for (int col = 1; col < order; col++) {
                 for (int row = 0; row < col; row++) {
                     if (hasEdge(row, col)) {
-                        currentByte = (byte)(currentByte | (1 << (5 - currentBit)));
+                        currentByte = (byte) (currentByte | (1 << (5 - currentBit)));
                     }
 
                     // increment the bit
@@ -210,7 +222,7 @@ public class Subgraph {
                     if (currentBit == 0) {
                         // addSubgraph byte to output (increment by 63
                         // according to the graph6 algorithm)
-                        output[currentIndex] = (byte)(currentByte + 63);
+                        output[currentIndex] = (byte) (currentByte + 63);
                         currentIndex++;
                         currentByte = 0;
                     }
