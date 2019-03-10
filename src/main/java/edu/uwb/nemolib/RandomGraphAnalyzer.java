@@ -40,6 +40,9 @@ public final class RandomGraphAnalyzer {
         Map<String, List<Double>> labelToRelativeFrequencies = new HashMap<>();
 
         for (int i = 0; i < randomGraphCount; i++) {
+            //display status for every 100th graph
+            if (i % 100 == 99)
+                System.out.println("Analyzing random graph " + (i + 1) + "...");
             Graph randomGraph = RandomGraphGenerator.generate(targetGraph);
 
             // enumerate random graphs
