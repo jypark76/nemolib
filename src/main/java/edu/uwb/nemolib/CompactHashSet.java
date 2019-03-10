@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.lang.IllegalStateException;
 import java.util.NoSuchElementException;
 
-class CompactHashSet implements Serializable{
+class CompactHashSet implements Serializable {
 
     private static final int DEFAULT_CAPACITY = 29;
     private static final int STARTING_BUCKET_SIZE = 4;
@@ -20,7 +20,7 @@ class CompactHashSet implements Serializable{
     CompactHashSet(int tableSize) {
         if (tableSize < 0) {
             throw new IllegalArgumentException(
-                "Argument out of range (must be non-negative).");
+                    "Argument out of range (must be non-negative).");
         }
 
         size = 0;
@@ -50,7 +50,7 @@ class CompactHashSet implements Serializable{
     void add(int element) {
         if (element < 0) {
             throw new IllegalArgumentException(
-                "Argument out of range (must be non-negative).");
+                    "Argument out of range (must be non-negative).");
         }
 
         int bucket = hash(element) % table.length;

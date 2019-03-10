@@ -10,7 +10,7 @@ import java.util.Set;
  * The Labeler class combines g6 subgraph labels into canonical subgraph labels
  * using Brandon McKay's Nauty algorithm and the Nauty Traces labelg
  * implementation of that algorithm.
- *
+ * <p>
  * Presently, nemolib requires client programs to install labelg in the
  * directory of execution for their programs. We hope to create a Java
  * implementation of the Nauty algorithm in a future release in order to
@@ -18,9 +18,9 @@ import java.util.Set;
  */
 public final class Labeler {
 
-	// class variable
-	static int instanceCounter = 0;
-	
+    // class variable
+    static int instanceCounter = 0;
+
     // labelg program options
     private static final String labelGPath = "src/main/resources/labelg";
     private static final int invariant = 3;
@@ -28,7 +28,7 @@ public final class Labeler {
     private static final int maxinvarlevel = 100;
 
     // file options
-    private static final String filePrefix  = ".";
+    private static final String filePrefix = ".";
     private static final String filePostfix = ".g6";
 
     // data members
@@ -41,22 +41,22 @@ public final class Labeler {
      * binary in the directory of execution.
      */
     public Labeler() {
-	    instanceCounter++;
-	    long currentTime = System.currentTimeMillis();
-	    this.inputFilename = filePrefix + "rawgraph6_" +
-			    currentTime + filePostfix + instanceCounter;
-	    this.outputFilename = filePrefix + "canonical_" +
-			    currentTime + filePostfix + instanceCounter;
-	    this.args = getArgs();
+        instanceCounter++;
+        long currentTime = System.currentTimeMillis();
+        this.inputFilename = filePrefix + "rawgraph6_" +
+                currentTime + filePostfix + instanceCounter;
+        this.outputFilename = filePrefix + "canonical_" +
+                currentTime + filePostfix + instanceCounter;
+        this.args = getArgs();
     }
 
     private String[] getArgs() {
         String[] args = {
-            labelGPath,
-            "-i" + invariant,
-            "-I" + mininvarlevel + ":" + maxinvarlevel,
-            inputFilename,
-            outputFilename};
+                labelGPath,
+                "-i" + invariant,
+                "-I" + mininvarlevel + ":" + maxinvarlevel,
+                inputFilename,
+                outputFilename};
         return args;
     }
 
@@ -66,7 +66,7 @@ public final class Labeler {
         Map<String, String> g6CanLabelMap =
                 getCanonicalLabels(labelRelFreqsMap.keySet());
         Map<String, Set<Double>> result = new HashMap<>();
-        for (Map.Entry<String, Set<Double>> labelRelFreqs:
+        for (Map.Entry<String, Set<Double>> labelRelFreqs :
                 labelRelFreqsMap.entrySet()) {
             String canLabel = g6CanLabelMap.get(labelRelFreqs.getKey());
             Set<Double> currentRelFreqs = labelRelFreqs.getValue();
@@ -78,25 +78,25 @@ public final class Labeler {
         return result;
     }
 
-	// Get canonical labels using the labelg program.
-	// This function communicates with labelg using input and output files.
-	//
-	// code adapted from Vartika Verma's Nemo Finder project (UWB 2014)
-    public Map<String, String> getCanonicalLabels( Set<String> labels ) {
+    // Get canonical labels using the labelg program.
+    // This function communicates with labelg using input and output files.
+    //
+    // code adapted from Vartika Verma's Nemo Finder project (UWB 2014)
+    public Map<String, String> getCanonicalLabels(Set<String> labels) {
 
-		// must use LinkedHashMap to preserve ordering
-		Map<String, String> results = new LinkedHashMap<>();
-		
+        // must use LinkedHashMap to preserve ordering
+        Map<String, String> results = new LinkedHashMap<>();
+
         BufferedWriter writer = null;
         BufferedReader inputReader = null;
         BufferedReader outputReader = null;
         int returnCode = 0;
         try {
             writer = new BufferedWriter(new FileWriter(inputFilename));
-            for (String label : labels ) {
+            for (String label : labels) {
                 writer.write(label);
                 writer.write('\n');
-				results.put(label, "");
+                results.put(label, "");
             }
             writer.close();
 
@@ -130,9 +130,18 @@ public final class Labeler {
             e.printStackTrace();
             results = null;
         } finally {
-            try { writer.close(); } catch (Exception e) {}
-            try { inputReader.close(); } catch (Exception e) {}
-            try { outputReader.close(); } catch (Exception e) {}
+            try {
+                writer.close();
+            } catch (Exception e) {
+            }
+            try {
+                inputReader.close();
+            } catch (Exception e) {
+            }
+            try {
+                outputReader.close();
+            } catch (Exception e) {
+            }
             deleteFile(inputFilename);
             deleteFile(outputFilename);
         }
@@ -143,9 +152,9 @@ public final class Labeler {
 
         if (returnCode != 0) {
             System.err.println("`labelg` exited with a return code of: " +
-                returnCode);
+                    returnCode);
             System.err.print("`labelg` executed with: ");
-            for (String line:args) {
+            for (String line : args) {
                 System.err.print(line + " ");
             }
             System.err.println();
@@ -170,7 +179,7 @@ public final class Labeler {
             f.delete();
         } catch (Exception e) {
             System.err.println("Exception " + e +
-                " raised when attempting to delete " + filename);
+                    " raised when attempting to delete " + filename);
         }
     }
 }
