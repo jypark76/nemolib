@@ -64,7 +64,9 @@ public class RandESU implements SubgraphEnumerator {
         long duration1 = endTime - startTime;
 
         startTime = System.nanoTime();
+        int i = 0;
         for (int vertex : selectedVertices) {
+            ++i;
             enumerate(graph, subgraphs, subgraphSize, probs, vertex);
         }
         endTime = System.nanoTime();
@@ -77,6 +79,7 @@ public class RandESU implements SubgraphEnumerator {
         System.out.println();
         System.out.println("\t" + "duration1: \t\t" + duration1);
         System.out.println("\t" + "duration2: \t\t" + duration2);
+        System.out.println("\t" + "Loop count: \t\t" + i);
 
 
         System.exit(1);
@@ -98,22 +101,66 @@ public class RandESU implements SubgraphEnumerator {
                                  SubgraphEnumerationResult subgraphs,
                                  int subgraphSize, List<Double> probs, int vertex) {
 
+        long startTime = 0;
+        long endTime = 0;
+        long begin = System.nanoTime();
+        long end = 0;
+        long duration1 = 0;
+        long duration2 = 0;
+        long duration3 = 0;
+        long duration4 = 0;
+        long duration5 = 0;
+        long duration6 = 0;
+
+        startTime = System.nanoTime();
         Subgraph subgraph = new Subgraph(subgraphSize);
+        endTime = System.nanoTime();
+        duration1 = endTime - startTime;
+
+        startTime = System.nanoTime();
         AdjacencyList adjacencyList = new AdjacencyList();
+        endTime = System.nanoTime();
+        duration2 = endTime - startTime;
+
+        startTime = System.nanoTime();
         CompactHashSet.Iter iter =
                 graph.getAdjacencyList(vertex).iterator();
+        endTime = System.nanoTime();
+        duration3 = endTime - startTime;
+
+        startTime = System.nanoTime();
         while (iter.hasNext()) {
             int next = iter.next();
             if (next > vertex) {
                 adjacencyList.add(next);
             }
         }
-        subgraph.add(vertex, graph.getAdjacencyList(vertex));
+        endTime = System.nanoTime();
+        duration4 = endTime - startTime;
 
+        startTime = System.nanoTime();
+        subgraph.add(vertex, graph.getAdjacencyList(vertex));
+        endTime = System.nanoTime();
+        duration5 = endTime - startTime;
+
+        startTime = System.nanoTime();
         // randomly decide whether to extend
         if (shouldExtend(probs.get(1))) {
             extend(graph, subgraph, adjacencyList, probs, subgraphs);
         }
+        endTime = System.nanoTime();
+        duration6 = endTime - startTime;
+        end = System.nanoTime();
+
+        System.out.println("Enumeration part!!!");
+        System.out.println("\t\t" + "duration1: \t\t" + duration1);
+        System.out.println("\t\t" + "duration2: \t\t" + duration2);
+        System.out.println("\t\t" + "duration3: \t\t" + duration3);
+        System.out.println("\t\t" + "duration4: \t\t" + duration4);
+        System.out.println("\t\t" + "duration5: \t\t" + duration5);
+        System.out.println("\t\t" + "duration6: \t\t" + duration6);
+        System.out.println("\t\t" + "total: \t\t\t" + (end-begin));
+        System.exit(1);
     }
 
     // extend the subgraphs recursively
