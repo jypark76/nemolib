@@ -160,7 +160,7 @@ public class RandESU implements SubgraphEnumerator {
         System.out.println("\t\t" + "duration5: \t\t" + duration5);
         System.out.println("\t\t" + "duration6: \t\t" + duration6);
         System.out.println("\t\t" + "total: \t\t\t" + (end-begin));
-        System.exit(1);
+//        System.exit(1);
     }
 
     // extend the subgraphs recursively
