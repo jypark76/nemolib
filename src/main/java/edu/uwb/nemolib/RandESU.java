@@ -30,6 +30,9 @@ public class RandESU implements SubgraphEnumerator {
     public void enumerate(Graph graph,
                           int subgraphSize,
                           SubgraphEnumerationResult subgraphs) {
+
+        long startTime = System.nanoTime();
+
         // maintain list of nodes selected so far
         List<Integer> selectedVertices = new ArrayList<>();
 
@@ -55,9 +58,28 @@ public class RandESU implements SubgraphEnumerator {
                 selectedVertices.add(nodeSelected);
             }
         }
+
+        long endTime = System.nanoTime();
+
+        long duration1 = endTime - startTime;
+
+        startTime = System.nanoTime();
         for (int vertex : selectedVertices) {
             enumerate(graph, subgraphs, subgraphSize, probs, vertex);
         }
+        endTime = System.nanoTime();
+
+        long duration2 = endTime - startTime;
+
+        System.out.println("***** RANDESU (enumerate 1) *****");
+        System.out.println("\t" + "Graph Size: " + graph.getSize());
+        System.out.println("\t" + "First prob: " + probs.get(0));
+        System.out.println();
+        System.out.println("\t" + "duration1: \t\t" + duration1);
+        System.out.println("\t" + "duration2: \t\t" + duration2);
+
+
+        System.exit(1);
     }
 
     /**

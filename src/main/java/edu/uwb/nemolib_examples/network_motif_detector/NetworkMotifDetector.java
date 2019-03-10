@@ -99,11 +99,13 @@ public class NetworkMotifDetector {
         Map<String, List<Double>> randomLabelToRelativeFrequencies =
                 randomGraphAnalyzer.analyze(targetGraph, motifSize);
 
-        System.out.println("---------------------------------------------------------" + "\n\n\n");
-
         System.out.println("random Label Relative time \t" + ((System.currentTimeMillis() - startTally) / 1000.0));
         System.out.println("time from the beginning: \t" + ((System.currentTimeMillis() - startTime) / 1000.0) + "\n\n");
         startTally = System.currentTimeMillis();
+
+        System.out.println("---------------------------------------------------------" + "\n\n\n");
+
+
 
         RelativeFrequencyAnalyzer relativeFrequencyAnalyzer =
                 new RelativeFrequencyAnalyzer(randomLabelToRelativeFrequencies,

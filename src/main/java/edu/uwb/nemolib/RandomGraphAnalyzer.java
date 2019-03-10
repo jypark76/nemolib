@@ -39,20 +39,43 @@ public final class RandomGraphAnalyzer {
         // target graph, as those are the only labels about which we care
         Map<String, List<Double>> labelToRelativeFrequencies = new HashMap<>();
 
+        long startTime = System.currentTimeMillis();
+        double duration1 = 0;
+        double duration2 = 0;
+        double duration3 = 0;
+        double duration4 = 0;
+        double duration5 = 0;
+        double duration6 = 0;
+        double duration7 = 0;
+
         for (int i = 0; i < randomGraphCount; i++) {
             //display status for every 100th graph
             if (i % 100 == 99)
                 System.out.println("Analyzing random graph " + (i + 1) + "...");
+
+            startTime = System.currentTimeMillis();
             Graph randomGraph = RandomGraphGenerator.generate(targetGraph);
+            duration1 += (System.currentTimeMillis() - startTime) / 1000.0;
 
             // enumerate random graphs
+            startTime = System.currentTimeMillis();
             SubgraphCount subgraphCount = new SubgraphCount();
-            enumerator.enumerate(randomGraph, subgraphSize, subgraphCount);
-            subgraphCount.label();
+            duration2 += (System.currentTimeMillis() - startTime) / 1000.0;
 
+            startTime = System.currentTimeMillis();
+            enumerator.enumerate(randomGraph, subgraphSize, subgraphCount);
+            duration3 += (System.currentTimeMillis() - startTime) / 1000.0;
+
+            startTime = System.currentTimeMillis();
+            subgraphCount.label();
+            duration4 += (System.currentTimeMillis() - startTime) / 1000.0;
+
+            startTime = System.currentTimeMillis();
             Map<String, Double> curLabelRelFreqMap =
                     subgraphCount.getRelativeFrequencies();
+            duration5 += (System.currentTimeMillis() - startTime) / 1000.0;
 
+            startTime = System.currentTimeMillis();
             // populate labelToRelativeFrequencies with result
             for (Map.Entry<String, Double> curLabelRelFreqPair :
                     curLabelRelFreqMap.entrySet()) {
@@ -64,8 +87,10 @@ public final class RandomGraphAnalyzer {
                 }
                 labelToRelativeFrequencies.get(curLabel).add(curFreq);
             }
+            duration6 += (System.currentTimeMillis() - startTime) / 1000.0;
         }
 
+        startTime = System.currentTimeMillis();
         // fill in with zeros any List that is less than subgraph count to
         // ensure non-detection is accounted for.
         for (List<Double> freqs :
@@ -74,6 +99,21 @@ public final class RandomGraphAnalyzer {
                 freqs.add(0.0);
             }
         }
+        duration7 += (System.currentTimeMillis() - startTime) / 1000.0;
+
+        System.out.println();
+        System.out.println("**************************************");
+        System.out.println("RandomGraphAnalyzer Statistics");
+        System.out.println("duration1: " + duration1);
+        System.out.println("duration2: " + duration2);
+        System.out.println("duration3: " + duration3);
+        System.out.println("duration4: " + duration4);
+        System.out.println("duration5: " + duration5);
+        System.out.println("duration6: " + duration6);
+        System.out.println("duration7: " + duration7);
+        System.out.println("**************************************");
+        System.out.println();
+
         return labelToRelativeFrequencies;
     }
 }
