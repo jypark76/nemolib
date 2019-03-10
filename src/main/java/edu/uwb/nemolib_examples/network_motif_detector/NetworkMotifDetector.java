@@ -42,7 +42,7 @@ public class NetworkMotifDetector {
         }
 
         System.out.println("File Input Time \t\t\t" + ((System.currentTimeMillis() - startTally) / 1000.0));
-        System.out.println("time from the beginning: \t" + ((System.currentTimeMillis() - startTime) / 1000.0) + "\n\n");
+        System.out.println("Time from the beginning: \t" + ((System.currentTimeMillis() - startTime) / 1000.0) + "\n\n");
         startTally = System.currentTimeMillis();
 
         // Hard-code probs for now. This vector will take about ~10% sample
@@ -75,7 +75,7 @@ public class NetworkMotifDetector {
 
         System.out.println("---------------------------------------------------------" + "\n\n\n");
 
-        System.out.println(targetGraph);
+//        System.out.println(targetGraph);
         System.out.println("randGraphCount: " + randGraphCount + "\n\n");
         System.out.println("motifSize: " + motifSize + "\n\n");
         System.out.print("probs: ");
